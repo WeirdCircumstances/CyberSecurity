@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: cybersecurity_app_1
+    volumes:
+      - media-root:/code/cybersecurity/media
+      # - cybersecurity_db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    command: ./manage.py runserver 0.0.0.0:8000 --settings=cybersecurity.settings.dev
+    links:
+      - redis:redis
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis
+
+  db:
+    # restart: always
+    image: postgres:15-alpine
+    container_name: cybersecurity_db_1
+    volumes:
+      - cybersecurity_db:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+
+  redis:
+    restart: always
+    image: redis:6.2
+    container_name: cybersecurity_redis_1
+    expose:
+      - '6379'
+
+volumes:
+  media-root:
+  cybersecurity_db:
