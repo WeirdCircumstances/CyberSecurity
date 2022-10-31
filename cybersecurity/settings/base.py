@@ -35,7 +35,7 @@ SECRET_KEY = "c6u0-9c!7nilj_ysatsda0(f@e_2mws2f!6m0n^o*4#*q#kzp)"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('DJANGO_ALLOWED_HOSTS')]
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(";")
 
 # Uncomment this (and adjust as appropriate) to enable django-debug-toolbar
 # INTERNAL_IPS = [

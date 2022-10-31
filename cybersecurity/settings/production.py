@@ -7,7 +7,7 @@ import django_cache_url
 
 from .base import *  # noqa: F403
 
-DEBUG = os.getenv("DJANGO_DEBUG", "off") == "on"
+DEBUG = env("DJANGO_DEBUG", "off")
 
 # DJANGO_SECRET_KEY *should* be specified in the environment. If it's not, generate an ephemeral key.
 if "DJANGO_SECRET_KEY" in os.environ:
@@ -37,13 +37,10 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # WAGTAILADMIN_BASE_URL required for notification emails
 WAGTAILADMIN_BASE_URL = "http://localhost:8000"
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES["default"].update(db_from_env)
-
 # AWS creds may be used for S3 and/or Elasticsearch
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
-AWS_REGION = os.getenv("AWS_REGION", "")
+# AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+# AWS_REGION = os.getenv("AWS_REGION", "")
 
 # configure CACHES from CACHE_URL environment variable (defaults to locmem if no CACHE_URL is set)
 CACHES = {"default": django_cache_url.config()}
@@ -63,7 +60,7 @@ if ELASTICSEARCH_ENDPOINT:
                     "port": int(os.getenv("ELASTICSEARCH_PORT", "9200")),
                     "use_ssl": os.getenv("ELASTICSEARCH_USE_SSL", "off") == "on",
                     "verify_certs": os.getenv("ELASTICSEARCH_VERIFY_CERTS", "off")
-                    == "on",
+                                    == "on",
                 }
             ],
             "OPTIONS": {
@@ -72,30 +69,30 @@ if ELASTICSEARCH_ENDPOINT:
         }
     }
 
-    if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
-        from aws_requests_auth.aws_auth import AWSRequestsAuth
-
-        WAGTAILSEARCH_BACKENDS["default"]["HOSTS"][0]["http_auth"] = AWSRequestsAuth(
-            aws_access_key=AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-            aws_token=os.getenv("AWS_SESSION_TOKEN", ""),
-            aws_host=ELASTICSEARCH_ENDPOINT,
-            aws_region=AWS_REGION,
-            aws_service="es",
-        )
-    elif AWS_REGION:
-        # No API keys in the environ, so attempt to discover them with Boto instead, per:
-        # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#configuring-credentials
-        # This may be useful if your credentials are obtained via EC2 instance meta data.
-        from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
-
-        WAGTAILSEARCH_BACKENDS["default"]["HOSTS"][0][
-            "http_auth"
-        ] = BotoAWSRequestsAuth(
-            aws_host=ELASTICSEARCH_ENDPOINT,
-            aws_region=AWS_REGION,
-            aws_service="es",
-        )
+    # if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+    #     from aws_requests_auth.aws_auth import AWSRequestsAuth
+    #
+    #     WAGTAILSEARCH_BACKENDS["default"]["HOSTS"][0]["http_auth"] = AWSRequestsAuth(
+    #         aws_access_key=AWS_ACCESS_KEY_ID,
+    #         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    #         aws_token=os.getenv("AWS_SESSION_TOKEN", ""),
+    #         aws_host=ELASTICSEARCH_ENDPOINT,
+    #         aws_region=AWS_REGION,
+    #         aws_service="es",
+    #     )
+    # elif AWS_REGION:
+    #     # No API keys in the environ, so attempt to discover them with Boto instead, per:
+    #     # https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html#configuring-credentials
+    #     # This may be useful if your credentials are obtained via EC2 instance meta data.
+    #     from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+    #
+    #     WAGTAILSEARCH_BACKENDS["default"]["HOSTS"][0][
+    #         "http_auth"
+    #     ] = BotoAWSRequestsAuth(
+    #         aws_host=ELASTICSEARCH_ENDPOINT,
+    #         aws_region=AWS_REGION,
+    #         aws_service="es",
+    #     )
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
