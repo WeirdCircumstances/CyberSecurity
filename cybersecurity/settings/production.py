@@ -7,7 +7,7 @@ import django_cache_url
 
 from .base import *  # noqa: F403
 
-DEBUG = env("DJANGO_DEBUG", "off")
+DEBUG = env("DJANGO_DEBUG")
 
 # DJANGO_SECRET_KEY *should* be specified in the environment. If it's not, generate an ephemeral key.
 if "DJANGO_SECRET_KEY" in os.environ:
@@ -35,7 +35,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(";")
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # WAGTAILADMIN_BASE_URL required for notification emails
-WAGTAILADMIN_BASE_URL = "http://localhost:8000"
+WAGTAILADMIN_BASE_URL = "http://localhost:8010"
 
 # AWS creds may be used for S3 and/or Elasticsearch
 # AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")

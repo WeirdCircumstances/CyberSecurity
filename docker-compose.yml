@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: cybersecurity_app_1
+    restart: always
     volumes:
       - media-root:/code/cybersecurity/media
-      # - cybersecurity_db:/var/lib/postgresql/data
     env_file:
       - .env
     command: ./manage.py runserver 0.0.0.0:8000 --settings=cybersecurity.settings.dev
@@ -21,7 +21,7 @@ services:
       - redis
 
   db:
-    # restart: always
+    restart: always
     image: postgres:15-alpine
     container_name: cybersecurity_db_1
     volumes:

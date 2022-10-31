@@ -22,8 +22,7 @@ if [ "x$DJANGO_LOAD_INITIAL_DATA" = 'xon' ]; then
 	/venv/bin/python manage.py load_initial_data
 fi
 
-/venv/bin/python manage.py makemigrations #--settings=bioessentials.settings.dev
-# ./manage.py syncdb --noinput --no-initial-data # only temporary
-/venv/bin/python manage.py migrate #--settings=bioessentials.settings.dev
+/venv/bin/python manage.py makemigrations
+/venv/bin/python manage.py migrate
 
 exec "$@"
