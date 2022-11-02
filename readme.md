@@ -12,6 +12,9 @@ Not publishing importable data for security reasons ;)
 
 ## Restore
 
-`docker cp dump_(date and time).json `
+Copy to container:  
+`docker cp dump_(date and time).json`  
+
+Load dump:  
 `docker exec $(docker ps -qf name=cybersecurity_app_1) /venv/bin/python manage.py loaddata dump_(date and time).json --settings=cybersecurity.settings.dev`
 
