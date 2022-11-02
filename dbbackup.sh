@@ -12,4 +12,4 @@ docker exec -t cybersecurity_app_1 /venv/bin/python manage.py dumpdata \
         -e wagtailcore.PageLogEntry                     \
         -o ./dump.json
 
-mv ./dump.json ./dbbackups/dump_`date +%d-%m-%Y"_"%H_%M`.json
+docker cp cybersecurity_app_1:/code/dump.json dump_`date +%d-%m-%Y"_"%H_%M`.json
