@@ -23,7 +23,7 @@ from wagtail.models import (
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
-from .blocks import BaseStreamBlock
+from .blocks import BaseStreamBlock, TeamBlock
 
 
 @register_snippet
@@ -166,7 +166,7 @@ class FooterText(DraftStateMixin, RevisionMixin, PreviewableMixin, models.Model)
 
 class StandardPage(Page):
     """
-    A generic content page. On this demo site we use it for an about page but
+    A generic content page. On this demo site we use it for an about page, but
     it could be used for any type of page content that only needs a title,
     image, introduction and body field
     """
@@ -181,12 +181,16 @@ class StandardPage(Page):
         help_text="Landscape mode only; horizontal width between 1000px and 3000px.",
     )
     body = StreamField(
-        BaseStreamBlock(), verbose_name="Page body", blank=True, use_json_field=True
+        BaseStreamBlock(), verbose_name="Page body", blank=True, use_json_field=True,
     )
+
+    person = StreamField([('team', TeamBlock())], null=True, blank=True, use_json_field=True)
+
     content_panels = Page.content_panels + [
         FieldPanel("introduction", classname="full"),
         FieldPanel("body"),
         FieldPanel("image"),
+        FieldPanel("person"),
     ]
 
 
@@ -267,7 +271,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="First featured section for the homepage. Will display up to "
-        "three child items.",
+                  "three child items.",
         verbose_name="Featured section 1",
     )
 
@@ -281,7 +285,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="Second featured section for the homepage. Will display up to "
-        "three child items.",
+                  "three child items.",
         verbose_name="Featured section 2",
     )
 
@@ -295,7 +299,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="Third featured section for the homepage. Will display up to "
-        "six child items.",
+                  "six child items.",
         verbose_name="Featured section 3",
     )
 

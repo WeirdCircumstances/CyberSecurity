@@ -1,0 +1,38 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<section class="py-7 position-relative">
+  <span class="mask bg-gradient-secondary"></span>
+  <div class="container position-relative mb-4">
+    <div class="row">
+      <div class="col-md-6 mb-5">
+        <h3 class="text-white z-index-1 position-relative">{{ self.title }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      {% for card in self.cards %}
+        <div class="col-lg-6 col-12">
+          <div class="card card-profile mb-4 mt-5">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12 mt-n5">
+
+                <div class="p-3 pe-md-0">
+                  {% image card.image fill-1000x1000 as image %}
+                  <img class="w-100 border-radius-md shadow-lg" src="{{ image.url }}" alt="{{ image.alt }}">
+                </div>
+
+              </div>
+              <div class="col-lg-8 col-md-6 col-12 my-auto">
+                <div class="card-body ps-lg-0">
+                  <h4 class="mb-0">{% include_block card.name %}</h4>
+                  <h5 class="text-info">{% include_block card.role %}</h5>
+                  {% include_block card.text %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+

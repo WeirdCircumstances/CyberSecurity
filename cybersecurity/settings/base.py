@@ -15,11 +15,11 @@ import environ
 
 env = environ.Env()
 
-# Absolute filesystem path to the top-level project folder:
+DEBUG = env('DJANGO_DEBUG')
 
+# Absolute filesystem path to the top-level project folder:
 root = environ.Path(__file__) - 2
 PROJECT_ROOT = root()
-
 environ.Env.read_env(root('.env'))
 
 # Build paths inside the project like this: os.path.join(PROJECT_DIR, ...)
@@ -30,10 +30,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "c6u0-9c!7nilj_ysatsda0(f@e_2mws2f!6m0n^o*4#*q#kzp)"
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(";")
 
@@ -132,7 +131,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -178,14 +176,17 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
 ]
 
-STATIC_ROOT = os.path.join(PROJECT_DIR, "collect_static")
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+STATIC_ROOT = os.path.join(PROJECT_DIR, "collect_static.delete")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, "media")
 MEDIA_URL = "/media/"
 
 # Override in local settings or replace with your own key. Please don't use our demo key in production!
-GOOGLE_MAP_API_KEY = "AIzaSyD31CT9P9KxvNUJOwDq2kcFEIG8ADgaFgw"
+GOOGLE_MAP_API_KEY = env('GOOGLE_MAP_API_KEY')
 
 # Use Elasticsearch as the search backend for extra performance and better search results
 WAGTAILSEARCH_BACKENDS = {

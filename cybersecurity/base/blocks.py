@@ -5,6 +5,7 @@ from wagtail.blocks import (
     StreamBlock,
     StructBlock,
     TextBlock,
+    ListBlock,
 )
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
@@ -77,3 +78,21 @@ class BaseStreamBlock(StreamBlock):
         icon="fa-s15",
         template="blocks/embed_block.html",
     )
+
+
+class TeamBlock(StructBlock):
+    title = CharBlock(required=False, help_text='Titel')
+
+    cards = ListBlock(
+        StructBlock([
+            ('image', ImageChooserBlock()),
+            ('name', CharBlock(max_length=40, blank=True, null=True, help_text='Name')),
+            ('role', CharBlock(max_length=20, blank=True, null=True, help_text='Role')),
+            ('text', RichTextBlock(blank=True, null=True, help_text='Textblock')),
+        ])
+    )
+
+    class Meta:
+        icon = 'user'
+        template = 'blocks/team.html',
+        label = 'Team Cards'

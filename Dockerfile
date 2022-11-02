@@ -57,7 +57,7 @@ ENV UWSGI_WORKERS=2 UWSGI_THREADS=4
 ENV UWSGI_STATIC_MAP="/media/=/code/cybersecurity/media/"
 
 # Call collectstatic with dummy environment variables:
-# RUN DATABASE_URL=postgres://none REDIS_URL=none /venv/bin/python manage.py collectstatic --noinput
+# RUN /venv/bin/python manage.py collectstatic --noinput
 
 # make sure static files are writable by uWSGI process
 RUN mkdir -p /code/cybersecurity/media/images && chown -R 1000:2000 /code/cybersecurity/media
