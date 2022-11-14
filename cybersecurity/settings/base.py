@@ -46,7 +46,7 @@ ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(";")
 INSTALLED_APPS = [
     "cybersecurity.base",
     "cybersecurity.blog",
-    "cybersecurity.breads",
+    # "cybersecurity.breads",
     "cybersecurity.locations",
     "cybersecurity.search",
     "wagtail.contrib.search_promotions",
@@ -189,11 +189,24 @@ MEDIA_URL = "/media/"
 GOOGLE_MAP_API_KEY = env('GOOGLE_MAP_API_KEY')
 
 # Use Elasticsearch as the search backend for extra performance and better search results
+# WAGTAILSEARCH_BACKENDS = {
+#     "default": {
+#         "BACKEND": "wagtail.search.backends.database",
+#         "INDEX": "cybersecurity",
+#     },
+# }
+
+passwd = '22rMw/22D'
+
 WAGTAILSEARCH_BACKENDS = {
-    "default": {
-        "BACKEND": "wagtail.search.backends.database",
-        "INDEX": "cybersecurity",
-    },
+    'default': {
+        'BACKEND': 'wagtail.search.backends.elasticsearch7',
+        'URLS': [f'http://VR1a6qT:{passwd}@localhost:9200'],
+        'INDEX': 'wagtail',
+        'TIMEOUT': 5,
+        'OPTIONS': {},
+        'INDEX_SETTINGS': {},
+    }
 }
 
 # Wagtail settings

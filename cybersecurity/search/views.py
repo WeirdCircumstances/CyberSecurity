@@ -5,7 +5,7 @@ from wagtail.models import Page
 from wagtail.search.models import Query
 
 from cybersecurity.blog.models import BlogPage
-from cybersecurity.breads.models import BreadPage
+# from cybersecurity.breads.models import BreadPage
 from cybersecurity.locations.models import LocationPage
 
 
@@ -25,8 +25,8 @@ def search(request):
             blog_results = BlogPage.objects.live().search(search_query)
             blog_page_ids = [p.page_ptr.id for p in blog_results]
 
-            bread_results = BreadPage.objects.live().search(search_query)
-            bread_page_ids = [p.page_ptr.id for p in bread_results]
+            # bread_results = BreadPage.objects.live().search(search_query)
+            # bread_page_ids = [p.page_ptr.id for p in bread_results]
 
             location_results = LocationPage.objects.live().search(search_query)
             location_result_ids = [p.page_ptr.id for p in location_results]

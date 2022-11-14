@@ -5,7 +5,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from cybersecurity.base.models import FooterText, Person
-from cybersecurity.breads.models import BreadIngredient, BreadType, Country
+#from cybersecurity.breads.models import BreadIngredient, BreadType, Country
 
 """
 N.B. To see what icons are available for use in Wagtail menus and StreamField block types,
@@ -24,28 +24,28 @@ font-awesome icon set is available to you. Options are at https://fontawesome.co
 """
 
 
-class BreadIngredientAdmin(ModelAdmin):
-    # These stub classes allow us to put various models into the custom "Wagtail Bakery" menu item
-    # rather than under the default Snippets section.
-    model = BreadIngredient
-    search_fields = ("name",)
+# class BreadIngredientAdmin(ModelAdmin):
+#     # These stub classes allow us to put various models into the custom "Wagtail Bakery" menu item
+#     # rather than under the default Snippets section.
+#     model = BreadIngredient
+#     search_fields = ("name",)
+#
+#
+# class BreadTypeAdmin(ModelAdmin):
+#     model = BreadType
+#     search_fields = ("title",)
+#
+#
+# class BreadCountryAdmin(ModelAdmin):
+#     model = Country
+#     search_fields = ("title",)
 
 
-class BreadTypeAdmin(ModelAdmin):
-    model = BreadType
-    search_fields = ("title",)
-
-
-class BreadCountryAdmin(ModelAdmin):
-    model = Country
-    search_fields = ("title",)
-
-
-class BreadModelAdminGroup(ModelAdminGroup):
-    menu_label = "Bread Categories"
-    menu_icon = "fa-suitcase"  # change as required
-    menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
-    items = (BreadIngredientAdmin, BreadTypeAdmin, BreadCountryAdmin)
+# class BreadModelAdminGroup(ModelAdminGroup):
+#     menu_label = "Bread Categories"
+#     menu_icon = "fa-suitcase"  # change as required
+#     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
+#     items = (BreadIngredientAdmin, BreadTypeAdmin, BreadCountryAdmin)
 
 
 class PersonModelAdmin(ModelAdmin):
@@ -64,7 +64,7 @@ class FooterTextAdmin(ModelAdmin):
 
 
 class BakeryModelAdminGroup(ModelAdminGroup):
-    menu_label = "Bakery Misc"
+    menu_label = "Misc"
     menu_icon = "fa-cutlery"  # change as required
     menu_order = 300  # will put in 4th place (000 being 1st, 100 2nd)
     items = (PersonModelAdmin, FooterTextAdmin)
@@ -72,5 +72,5 @@ class BakeryModelAdminGroup(ModelAdminGroup):
 
 # When using a ModelAdminGroup class to group several ModelAdmin classes together,
 # you only need to register the ModelAdminGroup class with Wagtail:
-modeladmin_register(BreadModelAdminGroup)
+# modeladmin_register(BreadModelAdminGroup)
 modeladmin_register(BakeryModelAdminGroup)
