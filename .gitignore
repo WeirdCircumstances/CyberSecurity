@@ -3,6 +3,7 @@
 .DS_Store
 .env
 .vagrant
+.idea
 env.example
 env.production
 venv/
