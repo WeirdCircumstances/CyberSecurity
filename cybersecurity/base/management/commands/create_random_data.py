@@ -11,7 +11,7 @@ from willow.image import Image as WillowImage
 
 from cybersecurity.base.models import FooterText, HomePage, Person, StandardPage
 from cybersecurity.blog.models import BlogIndexPage, BlogPage
-from cybersecurity.breads.models import (
+from cybersecurity.science.models import (
     BreadIngredient,
     BreadPage,
     BreadsIndexPage,
